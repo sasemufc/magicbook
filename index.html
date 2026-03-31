@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KI MagicBook for Kids ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --gold: #FFB930;
+  --coral: #FF6B6B;
+  --mint: #4ECDC4;
+  --purple: #9B59B6;
+  --cream: #FFF8F0;
+  --parchment: #FDF3DC;
+  --ink: #2C1810;
+  --shadow: rgba(44,24,16,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* BACKGROUND STARS */
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(circle at 20% 20%, rgba(255,185,48,0.08) 0%, transparent 50%),
+             radial-gradient(circle at 80% 80%, rgba(78,205,196,0.08) 0%, transparent 50%),
+             radial-gradient(circle at 50% 50%, rgba(155,89,182,0.05) 0%, transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* HEADER */
+header{background:linear-gradient(135deg,#2C1810 0%,#4A2515 50%,#2C1810 100%);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);position:sticky;top:0;z-index:100}
+.logo{font-family:'Fredoka One',cursive;font-size:1.6rem;color:var(--gold);
+  text-shadow:2px 2px 4px rgba(0,0,0,0.5);display:flex;align-items:center;gap:8px}
+.logo span{font-size:1.8rem}
+.header-right{display:flex;align-items:center;gap:12px}
+.btn-settings{background:transparent;border:1px solid rgba(255,185,48,0.3);
+  color:var(--gold);padding:6px 10px;border-radius:8px;cursor:pointer;font-size:1rem;
+  transition:all .2s}
+.btn-settings:hover{background:rgba(255,185,48,0.1)}
+
+/* PROGRESS BAR */
+#progress-bar{background:#2C1810;padding:12px 24px;display:flex;gap:4px;
+  align-items:center;justify-content:center;flex-wrap:wrap}
+.step-dot{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);
+  border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.4);transition:all .4s;cursor:default}
+.step-dot.active{background:var(--gold);border-color:var(--gold);color:#2C1810;
+  box-shadow:0 0 12px rgba(255,185,48,0.6);transform:scale(1.15)}
+.step-dot.done{background:var(--mint);border-color:var(--mint);color:#fff}
+.step-connector{width:20px;height:2px;background:rgba(255,255,255,0.15);transition:background .4s}
+.step-connector.done{background:var(--mint)}
+
+/* MAIN */
+main{max-width:900px;margin:0 auto;padding:32px 20px;position:relative;z-index:1}
+
+/* SCREENS */
+.screen{display:none;animation:fadeIn .5s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* LANDING */
+#screen-landing{text-align:center;padding:40px 0}
+.landing-title{font-family:'Fredoka One',cursive;font-size:clamp(2.5rem,6vw,4.5rem);
+  color:var(--ink);line-height:1.1;margin-bottom:16px}
+.landing-title .magic{color:var(--coral);display:block}
+.landing-title .kids{color:var(--gold)}
+.landing-sub{font-size:1.15rem;color:#6B4C3B;max-width:520px;margin:0 auto 32px;line-height:1.6}
+.book-showcase{margin:32px 0;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.book-thumb{width:100px;height:130px;border-radius:8px 16px 16px 8px;
+  box-shadow:4px 4px 15px var(--shadow);display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;cursor:pointer;transition:transform .2s;position:relative;overflow:hidden}
+.book-thumb:hover{transform:translateY(-6px) rotate(-2deg)}
+.book-thumb:nth-child(1){background:linear-gradient(135deg,#FF6B6B,#FF8E53)}
+.book-thumb:nth-child(2){background:linear-gradient(135deg,#4ECDC4,#44B89D)}
+.book-thumb:nth-child(3){background:linear-gradient(135deg,#9B59B6,#8E44AD)}
+.book-thumb:nth-child(4){background:linear-gradient(135deg,#FFB930,#FF8C00)}
+.book-thumb:nth-child(5){background:linear-gradient(135deg,#3498DB,#2980B9)}
+.sparkle{position:absolute;top:6px;right:6px;font-size:1rem;animation:sparkle 2s infinite}
+@keyframes sparkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;
+  border-radius:50px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;
+  font-size:1rem;font-weight:800;transition:all .2s;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--coral),#FF8E53);color:#fff;
+  box-shadow:0 6px 20px rgba(255,107,107,0.4)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(255,107,107,0.5)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#FF8C00);color:#fff;
+  box-shadow:0 6px 20px rgba(255,185,48,0.4)}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(255,185,48,0.5)}
+.btn-mint{background:linear-gradient(135deg,var(--mint),#44B89D);color:#fff;
+  box-shadow:0 6px 20px rgba(78,205,196,0.4)}
+.btn-mint:hover{transform:translateY(-3px)}
+.btn-outline{background:transparent;border:2px solid var(--coral);color:var(--coral);padding:12px 24px}
+.btn-outline:hover{background:var(--coral);color:#fff}
+.btn-sm{padding:8px 20px;font-size:0.9rem}
+.btn-back{background:rgba(44,24,16,0.08);color:var(--ink);padding:10px 20px;border-radius:50px;
+  border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;
+  display:flex;align-items:center;gap:6px;transition:all .2s}
+.btn-back:hover{background:rgba(44,24,16,0.15)}
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:32px;flex-wrap:wrap;gap:12px}
+
+/* CARD */
+.card{background:white;border-radius:24px;padding:32px;
+  box-shadow:0 8px 40px var(--shadow);margin-bottom:24px}
+.card-title{font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--ink);
+  margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.card-sub{color:#8B6A5A;margin-bottom:24px;font-size:1rem}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.form-group{display:flex;flex-direction:column;gap:8px}
+label{font-weight:800;font-size:0.9rem;color:#5A3A2A;text-transform:uppercase;letter-spacing:.5px}
+input[type=text],input[type=email],input[type=tel],textarea,select{
+  padding:12px 16px;border-radius:14px;border:2px solid #E8D8CC;
+  font-family:'Nunito',sans-serif;font-size:1rem;background:#FAFAFA;
+  transition:all .2s;outline:none;width:100%}
+input:focus,textarea:focus,select:focus{border-color:var(--coral);background:#fff;
+  box-shadow:0 0 0 4px rgba(255,107,107,0.1)}
+textarea{resize:vertical;min-height:100px}
+
+/* OPTION GRID */
+.option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.option-card{background:#FAFAFA;border:3px solid #E8D8CC;border-radius:16px;
+  padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;
+  display:flex;flex-direction:column;align-items:center;gap:8px}
+.option-card:hover{border-color:var(--coral);transform:translateY(-3px)}
+.option-card.selected{border-color:var(--coral);background:rgba(255,107,107,0.08);
+  box-shadow:0 4px 15px rgba(255,107,107,0.2)}
+.option-icon{font-size:2.2rem}
+.option-label{font-weight:800;font-size:0.85rem;color:var(--ink)}
+
+/* AGE BADGES */
+.age-grid{display:flex;gap:10px;flex-wrap:wrap}
+.age-badge{padding:10px 20px;border-radius:50px;border:2px solid #E8D8CC;
+  cursor:pointer;font-weight:800;font-size:0.9rem;transition:all .2s;background:#FAFAFA}
+.age-badge:hover{border-color:var(--gold);transform:scale(1.05)}
+.age-badge.selected{background:var(--gold);border-color:var(--gold);color:#fff}
+
+/* AVATAR GRID */
+.avatar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:10px}
+.avatar-item{width:70px;height:70px;border-radius:50%;background:#F0E8E0;
+  border:3px solid #E8D8CC;display:flex;align-items:center;justify-content:center;
+  font-size:2rem;cursor:pointer;transition:all .2s;margin:0 auto}
+.avatar-item:hover{border-color:var(--mint);transform:scale(1.1)}
+.avatar-item.selected{border-color:var(--mint);background:rgba(78,205,196,0.1);
+  box-shadow:0 4px 12px rgba(78,205,196,0.4)}
+
+/* PHOTO UPLOAD */
+.upload-zone{border:3px dashed #E8D8CC;border-radius:20px;padding:32px;
+  text-align:center;cursor:pointer;transition:all .2s;background:#FAFAFA}
+.upload-zone:hover{border-color:var(--coral);background:rgba(255,107,107,0.03)}
+.upload-zone.has-file{border-color:var(--mint);background:rgba(78,205,196,0.05)}
+#photo-preview{max-width:120px;max-height:120px;border-radius:50%;object-fit:cover;
+  display:none;margin:12px auto;border:4px solid var(--mint);
+  box-shadow:0 4px 20px rgba(78,205,196,0.3)}
+
+/* AI LOADING */
+#screen-generating{text-align:center;padding:40px 20px}
+.magic-loader{width:120px;height:120px;margin:0 auto 24px;position:relative}
+.magic-loader .book-icon{font-size:4rem;animation:float 2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+.magic-loader::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+  width:60px;height:10px;background:rgba(44,24,16,0.1);border-radius:50%;
+  animation:shadow 2s ease-in-out infinite}
+@keyframes shadow{0%,100%{transform:translateX(-50%) scaleX(1)}50%{transform:translateX(-50%) scaleX(0.6)}}
+.dots span{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 3px;
+  background:var(--coral);animation:dots 1.4s infinite both}
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+@keyframes dots{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+.progress-text{font-size:1.1rem;color:#8B6A5A;margin-top:12px;font-weight:600;
+  animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+/* BOOK PREVIEW */
+#screen-preview .book-pages{display:flex;flex-direction:column;gap:24px}
+.book-page{background:var(--parchment);border-radius:16px;padding:24px;
+  border:2px solid #E8D8CC;position:relative;box-shadow:3px 3px 15px var(--shadow)}
+.book-page .page-num{position:absolute;bottom:12px;right:16px;
+  font-size:0.8rem;color:#C4A882;font-family:'Caveat',cursive;font-size:1rem}
+.book-page h3{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--ink);margin-bottom:12px}
+.book-page p{line-height:1.8;color:#4A3022;font-size:1rem}
+.page-emoji{font-size:3rem;margin-bottom:12px;display:block;text-align:center}
+.edit-btn{position:absolute;top:12px;right:12px;background:rgba(255,107,107,0.1);
+  border:1px solid rgba(255,107,107,0.3);border-radius:8px;padding:4px 10px;
+  cursor:pointer;font-size:0.75rem;font-weight:700;color:var(--coral);transition:all .2s}
+.edit-btn:hover{background:var(--coral);color:#fff}
+.page-edit-area{width:100%;background:white;border:2px solid var(--coral);
+  border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:0.95rem;
+  line-height:1.7;min-height:100px;outline:none;display:none}
+
+/* FORMAT SELECTION */
+.format-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:500px){.format-cards{grid-template-columns:1fr}}
+.format-card{border:3px solid #E8D8CC;border-radius:20px;padding:24px;
+  cursor:pointer;transition:all .3s;text-align:center;background:#FAFAFA;position:relative}
+.format-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.format-card.selected{border-color:var(--gold);background:rgba(255,185,48,0.06);
+  box-shadow:0 8px 30px rgba(255,185,48,0.2)}
+.format-card .format-icon{font-size:3rem;margin-bottom:12px}
+.format-card .format-name{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--ink);margin-bottom:8px}
+.format-card .format-price{font-size:2rem;font-weight:800;color:var(--coral);margin-bottom:8px}
+.format-card .format-desc{font-size:0.85rem;color:#8B6A5A;line-height:1.5}
+.format-badge{position:absolute;top:-10px;right:16px;background:var(--coral);color:#fff;
+  font-size:0.75rem;font-weight:800;padding:4px 12px;border-radius:20px}
+
+/* CHECKOUT */
+.tabs{display:flex;gap:8px;margin-bottom:20px}
+.tab{padding:10px 20px;border-radius:10px;border:2px solid #E8D8CC;cursor:pointer;
+  font-weight:800;transition:all .2s;background:#FAFAFA}
+.tab.active{background:var(--coral);border-color:var(--coral);color:#fff}
+
+/* TWINT MOCK */
+.twint-box{background:linear-gradient(135deg,#F5A623,#E07C00);border-radius:20px;
+  padding:28px;text-align:center;color:#fff;margin-top:16px}
+.twint-logo{font-size:1.8rem;font-weight:900;margin-bottom:8px;letter-spacing:-1px}
+.twint-amount{font-size:2.5rem;font-weight:900;margin:12px 0}
+.qr-mock{width:140px;height:140px;background:#fff;border-radius:12px;
+  margin:16px auto;display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;color:#333;text-align:center;padding:8px;line-height:1.4}
+.twint-note{font-size:0.85rem;opacity:0.9;margin-top:8px}
+
+/* ORDER SUMMARY SIDEBAR */
+.checkout-grid{display:grid;grid-template-columns:1fr 340px;gap:20px}
+@media(max-width:700px){.checkout-grid{grid-template-columns:1fr}}
+.order-summary{background:var(--parchment);border-radius:20px;padding:20px;
+  border:2px solid #E8D8CC;height:fit-content}
+.order-summary h4{font-family:'Fredoka One',cursive;margin-bottom:16px;
+  font-size:1.2rem;color:var(--ink)}
+.summary-row{display:flex;justify-content:space-between;padding:8px 0;
+  border-bottom:1px solid #E8D8CC;font-size:0.9rem}
+.summary-row:last-child{border:none;font-weight:800;font-size:1rem;color:var(--coral)}
+
+/* CONFIRMATION */
+#screen-confirm{text-align:center;padding:32px 0}
+.confetti{font-size:4rem;animation:bounce 1s ease-in-out infinite alternate}
+@keyframes bounce{from{transform:scale(1)}to{transform:scale(1.1)}}
+.confirm-box{background:linear-gradient(135deg,var(--mint),#44B89D);border-radius:24px;
+  padding:32px;color:#fff;margin:24px 0}
+.confirm-box h2{font-family:'Fredoka One',cursive;font-size:2rem;margin-bottom:8px}
+.order-id{font-size:1.2rem;font-family:'Caveat',cursive;font-size:1.5rem;opacity:0.9;margin-top:8px}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:24px;padding:32px;max-width:480px;width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.modal h3{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:8px}
+.modal-close{float:right;font-size:1.5rem;cursor:pointer;color:#8B6A5A;
+  background:none;border:none;line-height:1}
+.modal .form-group{margin-bottom:16px}
+.api-note{font-size:0.8rem;color:#8B6A5A;margin-top:6px;line-height:1.5}
+a{color:var(--coral)}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#E8D8CC}
+.divider span{color:#8B6A5A;font-size:0.85rem;font-weight:700}
+
+/* TAG */
+.tag{display:inline-flex;align-items:center;gap:4px;background:rgba(255,107,107,0.1);
+  color:var(--coral);border-radius:20px;padding:4px 12px;font-size:0.8rem;font-weight:700;margin:2px}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  main{padding:20px 16px}
+  .card{padding:20px}
+  .form-grid{grid-template-columns:1fr}
+  .option-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo"><span>📖</span> KI MagicBook</div>
+  <div class="header-right">
+    <button class="btn-settings" onclick="openSettings()">⚙️ API Key</button>
+  </div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar">
+  <div class="step-dot active" id="dot-1">1</div>
+  <div class="step-connector" id="con-1"></div>
+  <div class="step-dot" id="dot-2">2</div>
+  <div class="step-connector" id="con-2"></div>
+  <div class="step-dot" id="dot-3">3</div>
+  <div class="step-connector" id="con-3"></div>
+  <div class="step-dot" id="dot-4">4</div>
+  <div class="step-connector" id="con-4"></div>
+  <div class="step-dot" id="dot-5">5</div>
+  <div class="step-connector" id="con-5"></div>
+  <div class="step-dot" id="dot-6">6</div>
+  <div class="step-connector" id="con-6"></div>
+  <div class="step-dot" id="dot-7">7</div>
+</div>
+
+<main>
+
+<!-- SCREEN 1: LANDING -->
+<div class="screen active" id="screen-landing">
+  <div style="text-align:center;padding:20px 0 40px">
+    <div class="landing-title">
+      <span style="font-size:1rem;color:var(--coral);font-family:'Nunito';font-weight:800;letter-spacing:2px;text-transform:uppercase">✨ Personalisierte KI-Kinderbücher</span>
+      <span class="magic">KI MagicBook</span>
+      <span class="kids">for Kids</span>
+    </div>
+    <p class="landing-sub">Erstelle in wenigen Minuten ein einzigartiges, KI-generiertes Kinderbuch – mit deinem Kind als Held der Geschichte! 🌟</p>
+    <div class="book-showcase">
+      <div class="book-thumb">🦁<span class="sparkle">✨</span></div>
+      <div class="book-thumb">🧚<span class="sparkle">⭐</span></div>
+      <div class="book-thumb">🚀<span class="sparkle">✨</span></div>
+      <div class="book-thumb">🐉<span class="sparkle">💫</span></div>
+      <div class="book-thumb">🧜<span class="sparkle">✨</span></div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px">
+      <button class="btn btn-primary" onclick="goTo(2)" style="font-size:1.1rem;padding:16px 40px">
+        ✨ Mein Buch erstellen
+      </button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:40px;text-align:left">
+      <div class="card" style="padding:20px">
+        <div style="font-size:2rem;margin-bottom:8px">🎨</div>
+        <div style="font-weight:800;margin-bottom:6px">Personalisiert</div>
+        <div style="font-size:0.9rem;color:#8B6A5A">Dein Kind als Hauptfigur – mit eigenem Namen, Aussehen und Abenteuer</div>
+      </div>
+      <div class="card" style="padding:20px">
+        <div style="font-size:2rem;margin-bottom:8px">🤖</div>
+        <div style="font-weight:800;margin-bottom:6px">KI-generiert</div>
+        <div style="font-size:0.9rem;color:#8B6A5A">Unique Geschichte – kein Buch ist gleich</div>
+      </div>
+      <div class="card" style="padding:20px">
+        <div style="font-size:2rem;margin-bottom:8px">📦</div>
+        <div style="font-weight:800;margin-bottom:6px">eBook oder Print</div>
+        <div style="font-size:0.9rem;color:#8B6A5A">Digital ab CHF 9.90 oder gedruckt ab CHF 34.90</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 2: KIND & THEMA -->
+<div class="screen" id="screen-2">
+  <div class="card">
+    <div class="card-title">👶 Über dein Kind</div>
+    <div class="card-sub">Erzähl uns von dem kleinen Helden / der kleinen Heldin!</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Name des Kindes</label>
+        <input type="text" id="child-name" placeholder="z.B. Emma oder Liam" oninput="state.childName=this.value"/>
+      </div>
+      <div class="form-group">
+        <label>Geschlecht</label>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <div class="option-card" style="flex:1;padding:12px" id="gender-m" onclick="selectGender('Junge')">
+            <span class="option-icon">👦</span>
+            <span class="option-label">Junge</span>
+          </div>
+          <div class="option-card" style="flex:1;padding:12px" id="gender-f" onclick="selectGender('Mädchen')">
+            <span class="option-icon">👧</span>
+            <span class="option-label">Mädchen</span>
+          </div>
+          <div class="option-card" style="flex:1;padding:12px" id="gender-n" onclick="selectGender('Neutral')">
+            <span class="option-icon">🧒</span>
+            <span class="option-label">Neutral</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:20px">
+      <label>Altersgruppe</label>
+      <div class="age-grid" style="margin-top:8px">
+        <div class="age-badge" onclick="selectAge('1-3 Jahre')">1–3 Jahre</div>
+        <div class="age-badge" onclick="selectAge('4-6 Jahre')">4–6 Jahre</div>
+        <div class="age-badge" onclick="selectAge('7-9 Jahre')">7–9 Jahre</div>
+        <div class="age-badge" onclick="selectAge('10-12 Jahre')">10–12 Jahre</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📖 Das Thema</div>
+    <div class="card-sub">Worum soll es in der Geschichte gehen?</div>
+    <div class="option-grid">
+      <div class="option-card" onclick="selectTheme(this,'Abenteuer im Dschungel')">
+        <span class="option-icon">🌴</span><span class="option-label">Dschungel-Abenteuer</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Weltraumabenteuer')">
+        <span class="option-icon">🚀</span><span class="option-label">Weltraum</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Unterwasser-Welt')">
+        <span class="option-icon">🐠</span><span class="option-label">Unterwasser</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Märchenwald')">
+        <span class="option-icon">🌲</span><span class="option-label">Märchenwald</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Drachen und Magie')">
+        <span class="option-icon">🐉</span><span class="option-label">Drachen</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Superhelden')">
+        <span class="option-icon">🦸</span><span class="option-label">Superhelden</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Piraten und Schätze')">
+        <span class="option-icon">🏴‍☠️</span><span class="option-label">Piraten</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Dinosaurier')">
+        <span class="option-icon">🦕</span><span class="option-label">Dinosaurier</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Feen und Elfen')">
+        <span class="option-icon">🧚</span><span class="option-label">Feen</span>
+      </div>
+      <div class="option-card" onclick="selectTheme(this,'Eigenes Thema')">
+        <span class="option-icon">✏️</span><span class="option-label">Eigenes</span>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:16px">
+      <label>Eigenes Thema oder Details</label>
+      <textarea id="custom-theme" placeholder="z.B. Emma findet eine magische Katze und zusammen lösen sie Rätsel..." oninput="state.customTheme=this.value"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🦸 Die Hauptfigur</div>
+    <div class="card-sub">Wer begleitet dein Kind im Abenteuer?</div>
+    <div class="option-grid">
+      <div class="option-card" onclick="selectChar(this,'Drache')">
+        <span class="option-icon">🐉</span><span class="option-label">Drache</span>
+      </div>
+      <div class="option-card" onclick="selectChar(this,'Fee')">
+        <span class="option-icon">🧚</span><span class="option-label">Fee</span>
+      </div>
+      <div class="option-card" onclick="selectChar(this,'Roboter')">
+        <span class="option-icon">🤖</span><span class="option-label">Roboter</span>
+      </div>
+      <div class="option-card" onclick="selectChar(this,'Einhorn')">
+        <span class="option-icon">🦄</span><span class="option-label">Einhorn</span>
+      </div>
+      <div class="option-card" onclick="selectChar(this,'Löwe')">
+        <span class="option-icon">🦁</span><span class="option-label">Löwe</span>
+      </div>
+      <div class="option-card" onclick="selectChar(this,'Zauberer')">
+        <span class="option-icon">🧙</span><span class="option-label">Zauberer</span>
+      </div>
+      <div class="option-card" onclick="selectChar(this,'Meerjungfrau')">
+        <span class="option-icon">🧜</span><span class="option-label">Meerjungfrau</span>
+      </div>
+      <div class="option-card" onclick="selectChar(this,'Astronaut')">
+        <span class="option-icon">👨‍🚀</span><span class="option-label">Astronaut</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn-back" onclick="goTo(1)">← Zurück</button>
+    <button class="btn btn-primary" onclick="validateStep2()">Weiter →</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: STIL -->
+<div class="screen" id="screen-3">
+  <div class="card">
+    <div class="card-title">🎨 Buchstil wählen</div>
+    <div class="card-sub">Welcher Stil soll dein Buch haben?</div>
+    <div class="option-grid">
+      <div class="option-card" onclick="selectStyle(this,'Comic')">
+        <span class="option-icon">💥</span><span class="option-label">Comic</span>
+      </div>
+      <div class="option-card" onclick="selectStyle(this,'Märchenbuch')">
+        <span class="option-icon">🏰</span><span class="option-label">Märchenbuch</span>
+      </div>
+      <div class="option-card" onclick="selectStyle(this,'Abenteuerroman')">
+        <span class="option-icon">🗺️</span><span class="option-label">Abenteuer</span>
+      </div>
+      <div class="option-card" onclick="selectStyle(this,'Bilderbuch')">
+        <span class="option-icon">🖼️</span><span class="option-label">Bilderbuch</span>
+      </div>
+      <div class="option-card" onclick="selectStyle(this,'Gute-Nacht-Geschichte')">
+        <span class="option-icon">🌙</span><span class="option-label">Gute Nacht</span>
+      </div>
+      <div class="option-card" onclick="selectStyle(this,'Lernbuch')">
+        <span class="option-icon">📚</span><span class="option-label">Lernbuch</span>
+      </div>
+      <div class="option-card" onclick="selectStyle(this,'Witziges Buch')">
+        <span class="option-icon">😂</span><span class="option-label">Witzig</span>
+      </div>
+      <div class="option-card" onclick="selectStyle(this,'Reime & Gedichte')">
+        <span class="option-icon">🎵</span><span class="option-label">Reime</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📝 Sprache</div>
+    <div class="card-sub">In welcher Sprache soll das Buch sein?</div>
+    <div class="option-grid">
+      <div class="option-card" onclick="selectLang(this,'Deutsch')">
+        <span class="option-icon">🇩🇪</span><span class="option-label">Deutsch</span>
+      </div>
+      <div class="option-card" onclick="selectLang(this,'Englisch')">
+        <span class="option-icon">🇬🇧</span><span class="option-label">Englisch</span>
+      </div>
+      <div class="option-card" onclick="selectLang(this,'Kurdisch')">
+        <span class="option-icon">🏴</span><span class="option-label">Kurdisch</span>
+      </div>
+      <div class="option-card" onclick="selectLang(this,'Zweisprachig DE/KU')">
+        <span class="option-icon">🌐</span><span class="option-label">DE + Kurdisch</span>
+      </div>
+      <div class="option-card" onclick="selectLang(this,'Türkisch')">
+        <span class="option-icon">🇹🇷</span><span class="option-label">Türkisch</span>
+      </div>
+      <div class="option-card" onclick="selectLang(this,'Arabisch')">
+        <span class="option-icon">🇸🇦</span><span class="option-label">Arabisch</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn-back" onclick="goTo(2)">← Zurück</button>
+    <button class="btn btn-primary" onclick="validateStep3()">Weiter →</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: FOTO & AVATAR -->
+<div class="screen" id="screen-4">
+  <div class="card">
+    <div class="card-title">📸 Foto hochladen</div>
+    <div class="card-sub">Optional: Lade ein Foto des Kindes hoch für den Buchcover.</div>
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('photo-input').click()">
+      <img id="photo-preview" src="" alt="Vorschau"/>
+      <div id="upload-text">
+        <div style="font-size:3rem">📷</div>
+        <div style="font-weight:800;margin:8px 0">Foto auswählen</div>
+        <div style="color:#8B6A5A;font-size:0.9rem">JPG, PNG – max. 5 MB</div>
+      </div>
+    </div>
+    <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhoto(this)"/>
+    <button id="remove-photo" style="display:none;margin-top:12px" class="btn btn-outline btn-sm" onclick="removePhoto()">🗑️ Foto entfernen</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎭 Avatar erstellen</div>
+    <div class="card-sub">Wähle einen Avatar für dein Kind (wird im Buch verwendet).</div>
+    <div style="margin-bottom:16px">
+      <label style="font-weight:800;font-size:0.9rem;color:#5A3A2A;text-transform:uppercase;letter-spacing:.5px">Hautfarbe</label>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <div class="avatar-item" style="background:#FDDBB4;font-size:1rem;width:40px;height:40px;border-radius:8px" onclick="selectSkin('#FDDBB4',this)">🌸</div>
+        <div class="avatar-item" style="background:#F0A96C;font-size:1rem;width:40px;height:40px;border-radius:8px" onclick="selectSkin('#F0A96C',this)">🌞</div>
+        <div class="avatar-item" style="background:#C68642;font-size:1rem;width:40px;height:40px;border-radius:8px" onclick="selectSkin('#C68642',this)">🍫</div>
+        <div class="avatar-item" style="background:#8D5524;font-size:1rem;width:40px;height:40px;border-radius:8px" onclick="selectSkin('#8D5524',this)">🌰</div>
+      </div>
+    </div>
+    <div>
+      <label style="font-weight:800;font-size:0.9rem;color:#5A3A2A;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:8px">Avatar wählen</label>
+      <div class="avatar-grid">
+        <div class="avatar-item" onclick="selectAvatar(this,'👧')">👧</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'👦')">👦</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🧒')">🧒</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'👸')">👸</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🤴')">🤴</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🧙')">🧙</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🧚')">🧚</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🦸')">🦸</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🧜')">🧜</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🐸')">🐸</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🐱')">🐱</div>
+        <div class="avatar-item" onclick="selectAvatar(this,'🐰')">🐰</div>
+      </div>
+    </div>
+    <div id="avatar-preview-box" style="text-align:center;margin-top:20px;display:none">
+      <div style="font-weight:800;margin-bottom:8px;color:#5A3A2A">Dein Avatar:</div>
+      <div id="avatar-display" style="font-size:4rem;width:80px;height:80px;border-radius:50%;
+        border:4px solid var(--gold);display:flex;align-items:center;justify-content:center;
+        margin:0 auto;box-shadow:0 4px 20px rgba(255,185,48,0.3)"></div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn-back" onclick="goTo(3)">← Zurück</button>
+    <button class="btn btn-primary" onclick="goTo(5);generateBook()">✨ Buch generieren!</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: GENERATING -->
+<div class="screen" id="screen-5">
+  <div id="screen-generating">
+    <div class="magic-loader">
+      <div class="book-icon">📖</div>
+    </div>
+    <h2 style="font-family:'Fredoka One',cursive;font-size:2rem;margin-bottom:12px">Dein Buch wird geschrieben</h2>
+    <p class="progress-text" id="loading-text">Die KI denkt nach... ✨</p>
+    <div class="dots" style="margin-top:16px">
+      <span></span><span></span><span></span>
+    </div>
+    <div style="margin-top:24px;font-size:0.9rem;color:#8B6A5A;max-width:400px;margin-left:auto;margin-right:auto">
+      Ein einzigartiges Buch für <strong id="loading-name">dein Kind</strong> wird gerade geschrieben...
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 6: PREVIEW & EDIT -->
+<div class="screen" id="screen-6">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+    <div>
+      <h2 style="font-family:'Fredoka One',cursive;font-size:1.8rem">📖 Vorschau & Bearbeiten</h2>
+      <p style="color:#8B6A5A;font-size:0.9rem">Klicke auf ✏️ zum Bearbeiten einzelner Seiten</p>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline btn-sm" onclick="regenerateBook()">🔄 Neu generieren</button>
+    </div>
+  </div>
+
+  <div id="book-cover" class="card" style="text-align:center;background:linear-gradient(135deg,var(--coral),#FF8E53);color:#fff;padding:40px">
+    <div id="cover-avatar" style="font-size:4rem;margin-bottom:12px"></div>
+    <div style="font-family:'Fredoka One',cursive;font-size:2rem;line-height:1.2" id="cover-title">Mein MagicBook</div>
+    <div style="margin-top:8px;opacity:0.85;font-size:1rem" id="cover-subtitle">Eine personalisierte Geschichte</div>
+    <div style="margin-top:16px;font-size:0.85rem;opacity:0.7">Erstellt mit KI MagicBook ✨</div>
+  </div>
+
+  <div class="book-pages" id="book-pages"></div>
+
+  <div class="nav-btns">
+    <button class="btn-back" onclick="goTo(4)">← Zurück</button>
+    <button class="btn btn-gold" onclick="goTo(7)">Weiter zum Bestellen →</button>
+  </div>
+</div>
+
+<!-- SCREEN 7: FORMAT -->
+<div class="screen" id="screen-7">
+  <div class="card">
+    <div class="card-title">📦 Format wählen</div>
+    <div class="card-sub">Wie möchtest du dein Buch erhalten?</div>
+    <div class="format-cards">
+      <div class="format-card" onclick="selectFormat('ebook',9.90)" id="format-ebook">
+        <div class="format-icon">💻</div>
+        <div class="format-name">eBook</div>
+        <div class="format-price">CHF 9.90</div>
+        <div class="format-desc">PDF-Download sofort nach Bestellung. Ideal zum Ausdrucken zuhause oder digital lesen.</div>
+      </div>
+      <div class="format-card" onclick="selectFormat('print',34.90)" id="format-print">
+        <div class="format-badge">Beliebt ⭐</div>
+        <div class="format-icon">📚</div>
+        <div class="format-name">Druckversion</div>
+        <div class="format-price">CHF 34.90</div>
+        <div class="format-desc">Hochwertiger Softcover-Druck. Lieferung in 7–10 Werktagen in der Schweiz.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn-back" onclick="goTo(6)">← Zurück</button>
+    <button class="btn btn-gold" onclick="validateStep7()">Weiter zur Bestellung →</button>
+  </div>
+</div>
+
+<!-- SCREEN 8: CHECKOUT -->
+<div class="screen" id="screen-8">
+  <h2 style="font-family:'Fredoka One',cursive;font-size:1.8rem;margin-bottom:20px">🛒 Bestellung abschliessen</h2>
+  <div class="checkout-grid">
+    <div>
+      <div class="card">
+        <div class="card-title" style="font-size:1.3rem">👤 Kontakt</div>
+        <div class="tabs">
+          <div class="tab active" id="tab-guest" onclick="switchTab('guest')">Als Gast</div>
+          <div class="tab" id="tab-login" onclick="switchTab('login')">Anmelden / Registrieren</div>
+        </div>
+        <div id="tab-guest-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Vorname</label>
+              <input type="text" id="o-firstname" placeholder="Anna" oninput="order.firstName=this.value"/>
+            </div>
+            <div class="form-group">
+              <label>Nachname</label>
+              <input type="text" id="o-lastname" placeholder="Muster" oninput="order.lastName=this.value"/>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:16px">
+            <label>E-Mail</label>
+            <input type="email" id="o-email" placeholder="anna@beispiel.ch" oninput="order.email=this.value"/>
+          </div>
+        </div>
+        <div id="tab-login-content" style="display:none">
+          <div class="form-group">
+            <label>E-Mail</label>
+            <input type="email" placeholder="deine@email.ch"/>
+          </div>
+          <div class="form-group" style="margin-top:16px">
+            <label>Passwort</label>
+            <input type="password" placeholder="••••••••"/>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-top:12px">Anmelden</button>
+          <div class="divider"><span>oder</span></div>
+          <button class="btn btn-mint btn-sm">✨ Neu registrieren</button>
+        </div>
+      </div>
+
+      <div class="card" id="address-card">
+        <div class="card-title" style="font-size:1.3rem">📮 Lieferadresse</div>
+        <div id="address-note" style="background:rgba(78,205,196,0.1);border:1px solid rgba(78,205,196,0.3);border-radius:12px;padding:12px;margin-bottom:16px;font-size:0.9rem;color:#2C8C85">
+          ℹ️ eBook: Lieferung per E-Mail. Keine Postadresse nötig.
+        </div>
+        <div id="address-fields" style="display:none">
+          <div class="form-grid">
+            <div class="form-group" style="grid-column:1/-1">
+              <label>Strasse & Nr.</label>
+              <input type="text" id="o-street" placeholder="Musterstrasse 12" oninput="order.street=this.value"/>
+            </div>
+            <div class="form-group">
+              <label>PLZ</label>
+              <input type="text" id="o-plz" placeholder="8000" oninput="order.plz=this.value"/>
+            </div>
+            <div class="form-group">
+              <label>Ort</label>
+              <input type="text" id="o-city" placeholder="Zürich" oninput="order.city=this.value"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="font-size:1.3rem">💳 Zahlung</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+          <div class="option-card" style="flex:none;padding:12px 16px" onclick="selectPayment(this,'twint')" id="pay-twint">
+            <span class="option-icon" style="font-size:1.5rem">📱</span>
+            <span class="option-label">TWINT</span>
+          </div>
+          <div class="option-card" style="flex:none;padding:12px 16px" onclick="selectPayment(this,'card')" id="pay-card">
+            <span class="option-icon" style="font-size:1.5rem">💳</span>
+            <span class="option-label">Kreditkarte</span>
+          </div>
+          <div class="option-card" style="flex:none;padding:12px 16px" onclick="selectPayment(this,'paypal')" id="pay-paypal">
+            <span class="option-icon" style="font-size:1.5rem">🅿️</span>
+            <span class="option-label">PayPal</span>
+          </div>
+        </div>
+        <div id="payment-twint" style="display:none">
+          <div class="twint-box">
+            <div class="twint-logo">TWINT</div>
+            <div style="font-size:0.9rem;opacity:0.9">Gesamtbetrag</div>
+            <div class="twint-amount" id="twint-amount">CHF 9.90</div>
+            <div class="qr-mock">
+              <div>
+                <div style="font-size:2rem">📱</div>
+                <div>QR-Code erscheint nach Bestellung</div>
+              </div>
+            </div>
+            <div class="twint-note">Scanne den QR-Code mit deiner TWINT-App oder gib die Nummer manuell ein.</div>
+          </div>
+        </div>
+        <div id="payment-card" style="display:none">
+          <div class="form-group">
+            <label>Kartennummer</label>
+            <input type="text" placeholder="1234 5678 9012 3456"/>
+          </div>
+          <div class="form-grid" style="margin-top:12px">
+            <div class="form-group">
+              <label>Gültig bis</label>
+              <input type="text" placeholder="MM/JJ"/>
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input type="text" placeholder="123"/>
+            </div>
+          </div>
+        </div>
+        <div id="payment-paypal" style="display:none">
+          <div style="background:#003087;color:#fff;border-radius:12px;padding:16px;text-align:center">
+            <div style="font-size:1.5rem;font-weight:900">Pay<span style="color:#009CDE">Pal</span></div>
+            <p style="font-size:0.85rem;margin-top:8px;opacity:0.9">Du wirst nach der Bestellung zu PayPal weitergeleitet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="order-summary">
+        <h4>🧾 Bestellübersicht</h4>
+        <div class="summary-row">
+          <span>Buch</span><span id="sum-title">–</span>
+        </div>
+        <div class="summary-row">
+          <span>Format</span><span id="sum-format">–</span>
+        </div>
+        <div class="summary-row">
+          <span>Kind</span><span id="sum-child">–</span>
+        </div>
+        <div class="summary-row">
+          <span>Thema</span><span id="sum-theme">–</span>
+        </div>
+        <div class="summary-row" id="sum-shipping-row" style="display:none">
+          <span>Versand (CH)</span><span>CHF 5.90</span>
+        </div>
+        <div class="summary-row" style="margin-top:8px;padding-top:8px;border-top:2px solid var(--coral) !important;border-bottom:none">
+          <span>Total</span><span id="sum-total" style="color:var(--coral);font-size:1.2rem">CHF –</span>
+        </div>
+        <button class="btn btn-gold" style="width:100%;margin-top:16px;justify-content:center" onclick="placeOrder()">
+          ✅ Jetzt bestellen
+        </button>
+        <p style="font-size:0.75rem;color:#8B6A5A;text-align:center;margin-top:8px;line-height:1.4">
+          Mit der Bestellung akzeptierst du unsere AGB. Deine Daten sind sicher 🔒
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn-back" onclick="goTo(7)">← Zurück</button>
+  </div>
+</div>
+
+<!-- SCREEN 9: CONFIRMATION -->
+<div class="screen" id="screen-9">
+  <div style="text-align:center;padding:40px 0">
+    <div class="confetti">🎉</div>
+    <h2 style="font-family:'Fredoka One',cursive;font-size:2.5rem;margin:16px 0">Bestellung erhalten!</h2>
+    <p style="color:#8B6A5A;font-size:1.05rem;max-width:500px;margin:0 auto">
+      Vielen Dank für deine Bestellung! Du erhältst gleich eine Bestätigung per E-Mail.
+    </p>
+    <div class="confirm-box" style="max-width:500px;margin:24px auto">
+      <div style="font-size:2rem">📖</div>
+      <h2 id="confirm-title">Dein MagicBook</h2>
+      <p id="confirm-format" style="opacity:0.9;font-size:1rem;margin-top:4px"></p>
+      <div class="order-id" id="confirm-orderId"></div>
+    </div>
+    <div style="background:var(--parchment);border-radius:16px;padding:20px;max-width:500px;margin:0 auto;text-align:left;border:2px solid #E8D8CC">
+      <div style="font-weight:800;margin-bottom:12px">Was passiert jetzt?</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:0.95rem;color:#5A3A2A">
+        <div>✉️ Bestellbestätigung an deine E-Mail</div>
+        <div id="step-ebook" style="display:none">📥 eBook-Download-Link folgt innert 30 Minuten</div>
+        <div id="step-print" style="display:none">🖨️ Druckfreigabe innert 1 Werktag · Lieferung in 7–10 Tagen</div>
+        <div>💬 Fragen? sasemufc@gmail.com</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:24px" onclick="startOver()">
+      📖 Neues Buch erstellen
+    </button>
+  </div>
+</div>
+
+</main>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSettings()">✕</button>
+    <h3>⚙️ Einstellungen</h3>
+    <p style="color:#8B6A5A;margin-bottom:20px;font-size:0.9rem">Konfiguriere deinen Anthropic API Key für die KI-Buchgenerierung.</p>
+    <div class="form-group">
+      <label>Anthropic API Key</label>
+      <input type="password" id="api-key-input" placeholder="sk-ant-..." oninput="saveApiKey(this.value)"/>
+      <div class="api-note">
+        API Key erhältst du unter <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.<br>
+        Der Key wird nur lokal in deinem Browser gespeichert (localStorage).
+      </div>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="closeSettings()">Speichern</button>
+  </div>
+</div>
+
+<!-- EDIT PAGE MODAL -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal" style="max-width:600px">
+    <button class="modal-close" onclick="closeEditModal()">✕</button>
+    <h3>✏️ Seite bearbeiten</h3>
+    <div class="form-group" style="margin-top:16px">
+      <label>Seitentext</label>
+      <textarea id="edit-textarea" style="min-height:150px"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-primary btn-sm" onclick="savePageEdit()">Speichern</button>
+      <button class="btn btn-outline btn-sm" onclick="closeEditModal()">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  childName: '', gender: '', age: '',
+  theme: '', customTheme: '', character: '',
+  style: '', language: 'Deutsch',
+  avatar: '👧', photo: null,
+  bookPages: [], bookTitle: '', bookSubtitle: ''
+};
+const order = {
+  format: '', price: 0, firstName: '', lastName: '',
+  email: '', street: '', plz: '', city: '', payment: ''
+};
+let currentStep = 1;
+let editingPageIndex = -1;
+let apiKey = localStorage.getItem('magicbook_api_key') || '';
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goTo(step) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const screenId = step === 1 ? 'screen-landing' : `screen-${step}`;
+  const el = document.getElementById(screenId);
+  if (el) {
+    el.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  currentStep = step;
+  updateProgress(step);
+  if (step === 8) updateOrderSummary();
+}
+
+function updateProgress(step) {
+  const stepMap = { 1:1, 2:2, 3:3, 4:4, 5:5, 6:5, 7:6, 8:7, 9:7 };
+  const active = stepMap[step] || step;
+  for (let i = 1; i <= 7; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    if (!dot) continue;
+    dot.classList.remove('active','done');
+    if (i < active) dot.classList.add('done');
+    else if (i === active) dot.classList.add('active');
+  }
+  for (let i = 1; i <= 6; i++) {
+    const con = document.getElementById(`con-${i}`);
+    if (con) { con.classList.toggle('done', i < active); }
+  }
+}
+
+// ============================================================
+// STEP 2: SELECTIONS
+// ============================================================
+function selectGender(g) {
+  state.gender = g;
+  ['m','f','n'].forEach(id => document.getElementById(`gender-${id}`)?.classList.remove('selected'));
+  const map = {Junge:'m', Mädchen:'f', Neutral:'n'};
+  document.getElementById(`gender-${map[g]}`)?.classList.add('selected');
+}
+function selectAge(a) {
+  state.age = a;
+  document.querySelectorAll('.age-badge').forEach(b => {
+    b.classList.toggle('selected', b.textContent.trim().includes(a.replace(' Jahre','')));
+  });
+}
+function selectTheme(el, t) {
+  state.theme = t;
+  document.querySelectorAll('#screen-2 .option-grid .option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectChar(el, c) {
+  state.character = c;
+  const cards = el.closest('.option-grid').querySelectorAll('.option-card');
+  cards.forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function validateStep2() {
+  const name = document.getElementById('child-name').value.trim();
+  if (!name) { alert('Bitte gib den Namen des Kindes ein.'); return; }
+  if (!state.gender) { alert('Bitte wähle ein Geschlecht.'); return; }
+  if (!state.age) { alert('Bitte wähle eine Altersgruppe.'); return; }
+  state.childName = name;
+  const custom = document.getElementById('custom-theme').value.trim();
+  if (custom) state.customTheme = custom;
+  goTo(3);
+}
+
+// ============================================================
+// STEP 3: STYLE & LANGUAGE
+// ============================================================
+function selectStyle(el, s) {
+  state.style = s;
+  document.querySelectorAll('#screen-3 .option-grid:first-of-type .option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectLang(el, l) {
+  state.language = l;
+  document.querySelectorAll('#screen-3 .option-grid:last-of-type .option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function validateStep3() {
+  if (!state.style) { alert('Bitte wähle einen Buchstil.'); return; }
+  goTo(4);
+}
+
+// ============================================================
+// STEP 4: PHOTO & AVATAR
+// ============================================================
+function handlePhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    state.photo = e.target.result;
+    const preview = document.getElementById('photo-preview');
+    preview.src = e.target.result;
+    preview.style.display = 'block';
+    document.getElementById('upload-text').style.display = 'none';
+    document.getElementById('upload-zone').classList.add('has-file');
+    document.getElementById('remove-photo').style.display = 'inline-flex';
+  };
+  reader.readAsDataURL(file);
+}
+function removePhoto() {
+  state.photo = null;
+  document.getElementById('photo-preview').style.display = 'none';
+  document.getElementById('upload-text').style.display = 'block';
+  document.getElementById('upload-zone').classList.remove('has-file');
+  document.getElementById('remove-photo').style.display = 'none';
+  document.getElementById('photo-input').value = '';
+}
+function selectSkin(color, el) {
+  el.closest('div').querySelectorAll('.avatar-item').forEach(a => a.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectAvatar(el, emoji) {
+  state.avatar = emoji;
+  document.querySelectorAll('.avatar-grid .avatar-item').forEach(a => a.classList.remove('selected'));
+  el.classList.add('selected');
+  const box = document.getElementById('avatar-preview-box');
+  const display = document.getElementById('avatar-display');
+  box.style.display = 'block';
+  display.textContent = emoji;
+}
+
+// ============================================================
+// BOOK GENERATION
+// ============================================================
+const loadingTexts = [
+  'Die KI schreibt deine Geschichte... ✨',
+  'Charaktere werden erschaffen... 🎭',
+  'Abenteuer entfalten sich... 🌟',
+  'Letzte Seiten werden geschrieben... 📝',
+  'Fast fertig! Noch einen Moment... 🎉'
+];
+
+async function generateBook() {
+  document.getElementById('loading-name').textContent = state.childName || 'dein Kind';
+  let ti = 0;
+  const interval = setInterval(() => {
+    document.getElementById('loading-text').textContent = loadingTexts[Math.min(ti++, loadingTexts.length-1)];
+  }, 2500);
+
+  const key = localStorage.getItem('magicbook_api_key') || '';
+  const theme = state.customTheme || state.theme || 'Abenteuer';
+  const prompt = `Du bist ein Kinderbuchautor. Erstelle ein personalisiertes Kinderbuch auf ${state.language}.
+
+Kind: ${state.childName || 'Max'} (${state.gender || 'neutral'}, ${state.age || '4-6 Jahre'})
+Thema: ${theme}
+Hauptfigur/Begleiter: ${state.character || 'magisches Tier'}
+Stil: ${state.style || 'Märchenbuch'}
+
+Erstelle ein Kinderbuch mit genau 6 Seiten (plus Titel). 
+
+Antworte NUR im folgenden JSON-Format ohne Markdown:
+{
+  "title": "Buchtitel mit dem Kindernamen",
+  "subtitle": "Kurzer Untertitel",
+  "pages": [
+    {"emoji": "🌟", "heading": "Seitenüberschrift", "text": "Text der Seite (2-4 Sätze, altersgerecht)"},
+    ...6 Seiten total
+  ]
+}
+
+Wichtig: Der Text soll altersgerecht für ${state.age || '4-6 Jahre'} sein, ${state.childName || 'das Kind'} als Held der Geschichte.`;
+
+  try {
+    let bookData;
+    if (key) {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+      const data = await resp.json();
+      const text = data.content?.[0]?.text || '';
+      const clean = text.replace(/```json|```/g,'').trim();
+      bookData = JSON.parse(clean);
+    } else {
+      // DEMO fallback
+      await new Promise(r => setTimeout(r, 3000));
+      bookData = getDemoBook();
+    }
+
+    clearInterval(interval);
+    state.bookPages = bookData.pages;
+    state.bookTitle = bookData.title;
+    state.bookSubtitle = bookData.subtitle;
+    renderBook();
+    goTo(6);
+  } catch(e) {
+    clearInterval(interval);
+    console.error(e);
+    const bookData = getDemoBook();
+    state.bookPages = bookData.pages;
+    state.bookTitle = bookData.title;
+    state.bookSubtitle = bookData.subtitle;
+    renderBook();
+    goTo(6);
+  }
+}
+
+function getDemoBook() {
+  const name = state.childName || 'Max';
+  const theme = state.theme || 'Abenteuer';
+  return {
+    title: `${name} und das grosse Abenteuer`,
+    subtitle: `Eine magische Geschichte über Mut und Freundschaft`,
+    pages: [
+      { emoji: '🌅', heading: 'Der besondere Morgen', text: `${name} wachte früh auf und spürte, dass dieser Tag besonders sein würde. Die Sonne schien golden durchs Fenster und irgendwo in der Ferne hörte ${name} ein geheimnisvolles Geräusch.` },
+      { emoji: '🗺️', heading: 'Die Entdeckung', text: `Unter dem alten Baum im Garten fand ${name} eine kleine Schatzkarte. Die Karte zeigte einen Weg durch einen magischen Wald. "${name}, du bist der Auserwählte!", stand in goldener Schrift geschrieben.` },
+      { emoji: '🌲', heading: 'Der Zauberwald', text: `${name} betrat den Zauberwald und staunte: Die Bäume leuchteten in allen Farben des Regenbogens! Überall funkelten kleine Lichter zwischen den Blättern. Dann hörte ${name} eine kleine Stimme: "Hier bin ich!"` },
+      { emoji: '🐉', heading: 'Der neue Freund', text: `Hinter einem Felsen versteckte sich ein kleiner ${state.character || 'Drache'} mit traurigen Augen. Er hatte sich verirrt und wusste nicht mehr nach Hause. "${name}, kannst du mir helfen?", fragte er mit piepsiger Stimme.` },
+      { emoji: '⭐', heading: 'Die Lösung', text: `${name} erinnerte sich an die Karte und verstand: Das Ziel war nicht ein Schatz, sondern ein Freund in Not! Gemeinsam fanden sie den Weg zurück nach Hause. Der ${state.character || 'Drache'} war überglücklich und so auch ${name}.` },
+      { emoji: '🏠', heading: 'Ein glückliches Ende', text: `Von diesem Tag an waren ${name} und sein neuer Freund unzertrennlich. Jeden Abend erzählten sie sich neue Abenteuer. Und wenn du jetzt schläfst, weisst du: Auch du kannst ein Held sein – genauso wie ${name}!` }
+    ]
+  };
+}
+
+function renderBook() {
+  const n = state.childName || 'dein Kind';
+  document.getElementById('cover-title').textContent = state.bookTitle;
+  document.getElementById('cover-subtitle').textContent = state.bookSubtitle;
+  document.getElementById('cover-avatar').textContent = state.avatar;
+
+  const container = document.getElementById('book-pages');
+  container.innerHTML = '';
+  state.bookPages.forEach((page, i) => {
+    const div = document.createElement('div');
+    div.className = 'book-page';
+    div.innerHTML = `
+      <button class="edit-btn" onclick="openEditModal(${i})">✏️ Bearbeiten</button>
+      <span class="page-emoji">${page.emoji}</span>
+      <h3>${page.heading}</h3>
+      <p id="page-text-${i}">${page.text}</p>
+      <div class="page-num">Seite ${i+1}</div>`;
+    container.appendChild(div);
+  });
+}
+
+function regenerateBook() {
+  goTo(5);
+  generateBook();
+}
+
+// ============================================================
+// EDIT MODAL
+// ============================================================
+function openEditModal(i) {
+  editingPageIndex = i;
+  document.getElementById('edit-textarea').value = state.bookPages[i].text;
+  document.getElementById('edit-modal').classList.add('show');
+}
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.remove('show');
+}
+function savePageEdit() {
+  const newText = document.getElementById('edit-textarea').value.trim();
+  if (!newText) return;
+  state.bookPages[editingPageIndex].text = newText;
+  document.getElementById(`page-text-${editingPageIndex}`).textContent = newText;
+  closeEditModal();
+}
+
+// ============================================================
+// FORMAT
+// ============================================================
+function selectFormat(f, price) {
+  order.format = f;
+  order.price = price;
+  ['ebook','print'].forEach(id => document.getElementById(`format-${id}`).classList.remove('selected'));
+  document.getElementById(`format-${f}`).classList.add('selected');
+}
+function validateStep7() {
+  if (!order.format) { alert('Bitte wähle ein Format.'); return; }
+  goTo(8);
+}
+
+// ============================================================
+// CHECKOUT
+// ============================================================
+function switchTab(tab) {
+  document.getElementById('tab-guest').classList.toggle('active', tab==='guest');
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-guest-content').style.display = tab==='guest' ? 'block' : 'none';
+  document.getElementById('tab-login-content').style.display = tab==='login' ? 'block' : 'none';
+}
+function selectPayment(el, p) {
+  order.payment = p;
+  document.querySelectorAll('#screen-8 .option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  ['twint','card','paypal'].forEach(id => {
+    document.getElementById(`payment-${id}`).style.display = 'none';
+  });
+  document.getElementById(`payment-${p}`).style.display = 'block';
+  document.getElementById('twint-amount').textContent = `CHF ${order.price.toFixed(2)}`;
+}
+function updateOrderSummary() {
+  document.getElementById('sum-title').textContent = state.bookTitle || 'KI MagicBook';
+  document.getElementById('sum-child').textContent = state.childName || '–';
+  document.getElementById('sum-theme').textContent = state.theme || state.customTheme || '–';
+  const isPrint = order.format === 'print';
+  document.getElementById('sum-format').textContent = isPrint ? 'Druckversion' : 'eBook (PDF)';
+  document.getElementById('sum-shipping-row').style.display = isPrint ? 'flex' : 'none';
+  document.getElementById('address-note').style.display = isPrint ? 'none' : 'block';
+  document.getElementById('address-fields').style.display = isPrint ? 'grid' : 'none';
+  const total = order.price + (isPrint ? 5.90 : 0);
+  document.getElementById('sum-total').textContent = `CHF ${total.toFixed(2)}`;
+}
+
+function placeOrder() {
+  const fname = document.getElementById('o-firstname').value.trim();
+  const lname = document.getElementById('o-lastname').value.trim();
+  const email = document.getElementById('o-email').value.trim();
+  if (!fname || !lname) { alert('Bitte gib Vor- und Nachname ein.'); return; }
+  if (!email || !email.includes('@')) { alert('Bitte gib eine gültige E-Mail-Adresse ein.'); return; }
+  if (!order.payment) { alert('Bitte wähle eine Zahlungsmethode.'); return; }
+  if (order.format === 'print') {
+    const street = document.getElementById('o-street').value.trim();
+    const plz = document.getElementById('o-plz').value.trim();
+    const city = document.getElementById('o-city').value.trim();
+    if (!street || !plz || !city) { alert('Bitte fülle die Lieferadresse aus.'); return; }
+  }
+
+  order.firstName = fname; order.lastName = lname; order.email = email;
+  const orderId = 'MB-' + Date.now().toString(36).toUpperCase();
+  const total = order.price + (order.format === 'print' ? 5.90 : 0);
+
+  // Send email via mailto (opens mail client)
+  const mailBody = `Neue Bestellung: ${orderId}%0D%0A%0D%0AKunde: ${fname} ${lname}%0D%0AEmail: ${email}%0D%0A%0D%0ABuch: ${state.bookTitle}%0D%0AKind: ${state.childName} (${state.age}, ${state.gender})%0D%0AThema: ${state.theme || state.customTheme}%0D%0AStil: ${state.style} | Sprache: ${state.language}%0D%0AFormat: ${order.format === 'print' ? 'Druckversion' : 'eBook'}%0D%0AZahlung: ${order.payment}%0D%0ATotal: CHF ${total.toFixed(2)}%0D%0A%0D%0ALieferadresse: ${order.street || 'eBook - keine Adresse'}, ${order.plz || ''} ${order.city || ''}`;
+
+  // Auto-open email
+  setTimeout(() => {
+    window.open(`mailto:sasemufc@gmail.com?subject=MagicBook Bestellung ${orderId}&body=${mailBody}`, '_blank');
+  }, 500);
+
+  // Show confirmation
+  document.getElementById('confirm-title').textContent = state.bookTitle || 'Dein MagicBook';
+  document.getElementById('confirm-format').textContent = order.format === 'print' ? '📚 Druckversion · CHF 34.90 + CHF 5.90 Versand' : '💻 eBook (PDF) · CHF 9.90';
+  document.getElementById('confirm-orderId').textContent = `Bestellnummer: ${orderId}`;
+  document.getElementById('step-ebook').style.display = order.format === 'ebook' ? 'block' : 'none';
+  document.getElementById('step-print').style.display = order.format === 'print' ? 'block' : 'none';
+  goTo(9);
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function openSettings() {
+  document.getElementById('api-key-input').value = localStorage.getItem('magicbook_api_key') || '';
+  document.getElementById('settings-modal').classList.add('show');
+}
+function closeSettings() {
+  document.getElementById('settings-modal').classList.remove('show');
+}
+function saveApiKey(v) {
+  localStorage.setItem('magicbook_api_key', v);
+}
+document.getElementById('settings-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeSettings();
+});
+document.getElementById('edit-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeEditModal();
+});
+
+// ============================================================
+// START OVER
+// ============================================================
+function startOver() {
+  Object.keys(state).forEach(k => {
+    if (Array.isArray(state[k])) state[k] = [];
+    else if (k === 'language') state[k] = 'Deutsch';
+    else if (k === 'avatar') state[k] = '👧';
+    else state[k] = '';
+  });
+  Object.keys(order).forEach(k => { order[k] = typeof order[k] === 'number' ? 0 : ''; });
+  goTo(1);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+updateProgress(1);
+</script>
+</body>
+</html>
